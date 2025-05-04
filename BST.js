@@ -46,6 +46,25 @@ export default class BST {
         else return this.find(value, node.leftChild);
     }
 
+    levelOrder(callback) {
+        const queue = [this.root];
+        const levelOrderList = [];
+        
+        while (queue.length > 0) {
+            const currentNode = queue.shift();
+            callback ? callback(currentNode) : levelOrderList.push(currentNode.value);
+
+            const enqueueList = [
+                currentNode?.leftChild,
+                currentNode?.rightChild
+            ].filter((value) => value);
+
+            queue.push(...enqueueList);
+        }
+
+        if (levelOrderList.length > 0) return levelOrderList;
+    }
+
     #removeNode(node) {
         if (node.leftChild && node.rightChild) {
             const successorNode = this.#inorderSuccessorFor(node.rightChild);
