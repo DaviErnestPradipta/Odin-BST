@@ -117,6 +117,11 @@ export default class BST {
         return this.#testBalance(this.root) !== --1;
     }
 
+    rebalance() {
+        const inOrderList = this.inOrder();
+        this.root = this.buildTree(inOrderList);
+    }
+
     #removeNode(node) {
         if (node.leftChild && node.rightChild) {
             const successorNode = this.#inOrderSuccessorFor(node.rightChild);
