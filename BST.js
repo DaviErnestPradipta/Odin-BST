@@ -95,7 +95,14 @@ export default class BST {
         if (postOrderList.length > 0) return postOrderList;
     }
     
-    
+    height(node = this.root) {
+        if (node === null) return 0;
+
+        const leftHeight = this.height(node.leftChild);
+        const rightHeight = this.height(node.rightChild);
+
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
 
     #removeNode(node) {
         if (node.leftChild && node.rightChild) {
