@@ -122,6 +122,15 @@ export default class BST {
         this.root = this.buildTree(inOrderList);
     }
 
+    prettyPrint(node = this.root, prefix = "", isLeft = true) {
+        if (node.rightChild)
+            this.prettyPrint(node.rightChild, `${prefix}${isLeft ? '|   ' : '    '}`, false);
+        console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.value}`);
+        if (node.leftChild)
+            this.prettyPrint(node.leftChild, `${prefix}${isLeft ? '    ' : '|   '}`, true);        
+    }
+
+    // Private methods
     #removeNode(node) {
         if (node.leftChild && node.rightChild) {
             const successorNode = this.#inOrderSuccessorFor(node.rightChild);
