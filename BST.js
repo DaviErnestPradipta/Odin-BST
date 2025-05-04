@@ -104,6 +104,15 @@ export default class BST {
         return Math.max(leftHeight, rightHeight) + 1;
     }
 
+    depth(nodeValue, node = this.root, edgeCount = 0) {
+        if (node === null) return;
+        if (node.value === nodeValue) return edgeCount;
+
+        if (node.value < nodeValue) 
+            return this.depth(nodeValue, node.rightChild, edgeCount + 1);
+        else return this.depth(nodeValue, node.leftChild, edgeCount + 1);
+    }
+
     #removeNode(node) {
         if (node.leftChild && node.rightChild) {
             const successorNode = this.#inOrderSuccessorFor(node.rightChild);
