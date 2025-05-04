@@ -38,4 +38,34 @@ export default class BST {
 
         return currentNode;
     }
+
+    find(value, node = this.root) {
+        if (node === null || node.value === value) return node;
+
+        if (node.value < value) return this.find(value, node.rightChild);
+        else return this.find(value, node.leftChild);
+    }
+
+    #removeNode(node) {
+        if (node.leftChild && node.rightChild) {
+            const successorNode = this.#inorderSuccessorFor(node.rightChild);
+            node.value = successorNode.value;
+            node.rightChild = this.remove(successorNode.value, node.rightChild);
+            
+            return node;
+        }
+        else {
+            const replacementNode = node.rightChild || node.leftChild;
+            node = null;
+            
+            return replacementNode;
+        }
+    }
+
+    #inorderSuccessorFor(node) {
+        let currentNode = node;
+        while (currentNode.leftChild) currentNode = currentNode.leftChild;
+        
+        return currentNode;
+    }
 }
