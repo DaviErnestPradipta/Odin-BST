@@ -85,6 +85,18 @@ export default class BST {
         if (preOrderList.length > 0) return preOrderList;
     }
 
+    postOrder(callback, node = this.root, postOrderList = []) {
+        if (node === null) return;
+
+        this.postOrder(callback, node.leftChild, postOrderList);
+        this.postOrder(callback, node.rightChild, postOrderList);
+        callback ? callback(node) : postOrderList.push(node.value);
+
+        if (postOrderList.length > 0) return postOrderList;
+    }
+    
+    
+
     #removeNode(node) {
         if (node.leftChild && node.rightChild) {
             const successorNode = this.#inOrderSuccessorFor(node.rightChild);
