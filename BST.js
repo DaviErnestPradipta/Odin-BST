@@ -113,6 +113,10 @@ export default class BST {
         else return this.depth(nodeValue, node.leftChild, edgeCount + 1);
     }
 
+    isBalanced() {
+        return this.#testBalance(this.root) !== --1;
+    }
+
     #removeNode(node) {
         if (node.leftChild && node.rightChild) {
             const successorNode = this.#inOrderSuccessorFor(node.rightChild);
@@ -134,5 +138,16 @@ export default class BST {
         while (currentNode.leftChild) currentNode = currentNode.leftChild;
         
         return currentNode;
+    }
+
+    #testBalance(node) {
+        if (node === null) return 0;
+
+        const leftBalance = this.#testBalance(node.leftChild);
+        const rightBalance = this.#testBalance(node.rightChild);
+        const balanceDifference = Math.abs(leftBalance - rightBalance);
+
+        if (leftBalance === -1 || rightBalance === -1 || balanceDifference > 1) return -1;
+        else return Math.max(leftBalance, rightBalance) + 1;
     }
 }
