@@ -65,9 +65,29 @@ export default class BST {
         if (levelOrderList.length > 0) return levelOrderList;
     }
 
+    inOrder(callback, node = this.root, inOrderList = []) {
+        if (node === null) return;
+
+        this.inOrder(callback, node.leftChild, inOrderList);
+        callback ? callback(node) : inOrderList.push(node.value);
+        this.inOrder(callback, node.rightChild, inOrderList);
+
+        if (inOrderList.length > 0) return inOrderList;
+    }
+
+    preOrder(callback, node = this.root, preOrderList = []) {
+        if (node === null) return;
+
+        callback ? callback(node) : preOrderList.push(node.value);
+        this.preOrder(callback, node.leftChild, preOrderList);
+        this.preOrder(callback, node.rightChild, preOrderList);
+
+        if (preOrderList.length > 0) return preOrderList;
+    }
+
     #removeNode(node) {
         if (node.leftChild && node.rightChild) {
-            const successorNode = this.#inorderSuccessorFor(node.rightChild);
+            const successorNode = this.#inOrderSuccessorFor(node.rightChild);
             node.value = successorNode.value;
             node.rightChild = this.remove(successorNode.value, node.rightChild);
             
@@ -81,7 +101,7 @@ export default class BST {
         }
     }
 
-    #inorderSuccessorFor(node) {
+    #inOrderSuccessorFor(node) {
         let currentNode = node;
         while (currentNode.leftChild) currentNode = currentNode.leftChild;
         
