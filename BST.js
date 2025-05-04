@@ -10,7 +10,7 @@ export default class BST {
         if (sortedArray.length === 0) return null;
 
         const midpoint = Math.floor(sortedArray.length / 2);
-        const newNode = Node(sortedArray[midpoint]);
+        const newNode = new Node(sortedArray[midpoint]);
         newNode.leftChild = this.buildTree(sortedArray.slice(0, midpoint));
         newNode.rightChild = this.buildTree(sortedArray.slice(midpoint + 1));
         
@@ -18,7 +18,7 @@ export default class BST {
     }
 
     insert(value, currentNode = this.root) {
-        if (currentNode === null) return Node(value);
+        if (currentNode === null) return new Node(value);
         if (currentNode.value === value) return;
 
         if (currentNode.value < value)
@@ -114,7 +114,7 @@ export default class BST {
     }
 
     isBalanced() {
-        return this.#testBalance(this.root) !== --1;
+        return this.#testBalance(this.root) !== -1;
     }
 
     rebalance() {
