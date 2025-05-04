@@ -27,4 +27,15 @@ export default class BST {
 
         return currentNode;
     }
+
+    remove(value, currentNode = this.root) {
+        if (currentNode === null) return currentNode;
+
+        if (currentNode.value === value) currentNode = this.#removeNode(currentNode);
+        else if (currentNode.value > value) 
+            currentNode.leftChild = this.remove(value, currentNode.leftChild);
+        else currentNode.rightChild = this.remove(value, currentNode.rightChild);
+
+        return currentNode;
+    }
 }
